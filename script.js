@@ -16,7 +16,7 @@ const data = [],
             span.innerHTML = '&#10008;'
             li.classList.add(this.liClass);
             li.setAttribute(this.liAttr, i)
-            li.innerHTML = `Задача: <span>«${value}»</span>.`,
+            li.innerHTML = `Задача: «${value}».`,
             li.appendChild(span);
             return li;
         }
