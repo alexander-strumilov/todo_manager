@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: darkslateblue;
+            color: aliceblue;
+            width: 400px;
+            display: block;
+            margin: 50px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul {
+            padding: 30px;
+        }
+
+        ul li {
+            position: relative;
+            list-style-type: none;
+            cursor: pointer;
+        }
+
+        ul li .delete-task {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+
+        input {
+            display: block;
+            margin: 10px auto;
+            width: 400px;
+            height: 50px;
+            border: 3px solid lightblue;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+
+        }
+
+        .task-block__btn_add {
+            display: block;
+            margin: 0 auto;
+            width: 100px;
+            ;
+        }
+        .task-block__btn_clear {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: red;
+        }
+
+        .task-block {
+            width: 400px;
+            max-height: 600px;
+            position: relative;
+        }
+        .task-list__item {
+            cursor: pointer;
+        }
+        .task-list__item_done {
+            text-decoration: line-through;
+        }
+        .task-list__item-close {
+            position: absolute;
+            right: 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="task-block">
+        <h1>ToDo List</h1>
+        <input type="text" placeholder="Add Task" class="task-block__input-value">
+        <button class="task-block__btn_add btn btn-primary">add</button>
+        <ul class="task-list"></ul>
+        <button onclick="localStorage.clear(); location.reload();" class="task-block__btn_clear btn btn-primary">Clear</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.js"></script>
+    <script>
+        const addTaskBtn = document.querySelector('.task-block__btn_add'),
+            data = [];
+        let taskInput = document.querySelector('.task-block__input-value'),
+            taskList = document.querySelector('.task-list'),
+            taskWrap = document.querySelector('.task-block');
+
+        const taskElement = {
+            li: 'li',
+            liClass: 'task-list__item',
+            liAttr: 'data-index',
+            span: 'span',
+            spanClass: 'task-list__item-close',
+            spanContent: '\2718',
+            create: function(value, i) {
+                let li = document.createElement(this.li),
+                    span = document.createElement(this.span);
+                    span.classList.add(this.spanClass);
+                    span.innerHTML = '&#10008;'
+                    li.classList.add(this.liClass);
+                    li.setAttribute(this.liAttr,i)
+                    li.innerHTML = `Задача «${value}» создана.`,
+                    li.appendChild(span);
+                    taskList.appendChild(li);
+            }
+        }
+
+        function init() {
+            if(localStorage.getItem('tasks')) {
+                const initData = JSON.parse(localStorage.getItem('tasks'));
+                let i = 0;
+                let tasks = document.querySelectorAll('.taskList li');
+                while (i < initData.length) {
+                    data.push(initData[i]);
+                    taskElement.create(initData[i].value,i)
+                    i++;
+                }
+            }
+        }
+        init();
+
+        addTaskBtn.addEventListener('click', () => {
+            addTask(taskInput.value);
+        });
+        taskList.addEventListener('click', removeTask)
+
+        function addTask(val) {
+            taskElement.create(val,data.length)
+            data.push({
+                'value': val,
+                'visible': true
+            });
+            taskInput.value = ''
+            updateStorage(data);
+        }
+
+        function removeTask(e) {
+            let tasks = document.getElementsByClassName('task-list__item'),
+                tasksClose = document.getElementsByClassName('task-list__item-close'),
+                target = e.target;
+            for (let i = 0; i < tasksClose.length; i++) {
+                if (tasksClose[i] == target && tasks[i].matches('li.task-list__item')) {
+                    data.splice(i,1);
+                    taskList.removeChild(tasks[i])
+                }
+                if (tasks[i] == target && tasks[i].matches('li.task-list__item')) {
+                    if(tasks[i].classList.contains('task-list__item_done')) {
+                        tasks[i].classList.remove('task-list__item_done')
+                    } else {
+                        tasks[i].classList.add('task-list__item_done')
+                    }
+                }
+            }
+            updateStorage(data);
+        }
+
+        function updateStorage(arg) {
+            localStorage.setItem('tasks', JSON.stringify(arg));
+        }
+    </script>
+    <!-- <script>
+        const addTaskBtn = document.querySelector('.add-task');
+        let taskInput = document.querySelector('.task-block__input-value'),
+            taskKey = document.querySelector('.task-block__input-key'),
+            taskList = document.querySelector('.task-list'),
+            taskWrap = document.querySelector('.task-block');
+        let data = {items:[]};
+        // let counter = 0;
+
+        Cookies.defaults = {
+            path: '/',
+            expires: 365
+        };
+
+        function initList() {
+            const lastData = Cookies.getJSON();
+            console.log(lastData)
+            for (let key in lastData) {
+                let li = document.createElement('li');
+                let div = document.createElement('div');
+                div.classList.add('delete-task');
+                div.innerHTML = 'remove';
+                data.items.push({key: lastData[key]});
+                li.innerHTML = `Task number ${key}:  <b>${lastData[key].value}</b>`;
+                taskList.appendChild(li);
+                li.appendChild(div);
+            }
+        }
+        initList();
+        console.log(data.items)
+
+
+        function updateCookes(key,value) {
+            Cookies.set(key, value);
+
+        }
+
+        addTaskBtn.addEventListener('click', addTask);
+
+        function addTask() {
+            if (taskInput.value) {
+                data.items.push({key: taskKey, value : taskInput.value});
+            }
+            console.log(data.items)
+            let li = document.createElement('li');
+            let div = document.createElement('div');
+            div.classList.add('delete-task');
+            div.innerHTML = 'remove';
+            for (let key in data) {
+                li.innerHTML = `Task number ${key}:  ${data[key]}`;
+                li.appendChild(div);
+                taskList.appendChild(li);
+                updateCookes(key);
+            }
+            updateCookes('key', taskInput.value)
+            // for(let key = 0; key < data.items.length; key++) {
+            //     data.items.key.push(22)
+            // }
+
+        }
+        let taskItem = document.getElementsByTagName('li');
+
+        taskList.addEventListener('click', function(e) {
+            for (let i = 0; i < taskItem.length; i++) {
+                if (e.target == taskItem[i]) {
+                    taskItem[i].style.textDecoration = 'line-through';
+                }
+            }
+        })
+         function removeTask() { {
+             for (let key in this) {
+                 console.log(this.key)
+             }
+         }}
+         taskItem[0].addEventListener('click', function() {
+            removeTask.apply(data)
+         })
+    </script> -->
+    <script>
+        const array = [1, 4, 7, 5, 5, 6, 4, 6, 3];
+
+        function countEmptySlots(arr) {
+            let max = Math.max.apply(null, arr),
+                emptySlots = 0;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== max) {
+                    emptySlots += max - arr[i];
+                }
+            }
+            return emptySlots;
+        }
+        console.log(countEmptySlots(array))
+
+        const anotherArray = array.reduce((result, item) => {
+            return result + Math.max.apply(null, array) - item;
+        }, 0);
+
+        console.log(anotherArray);
+    </script>
+    <script>
+    const array2 = [1,2,3,4,5];
+
+    Array.prototype.multBy = function(n) {
+        return this.map(function (i) {
+            return i*n;
+        })
+    }
+    console.log(array2.multBy(2))
+    </script>
+</body>
+
+</html>
