@@ -12,12 +12,18 @@
 </head>
 
 <body>
-    <div class="task-block">
-        <h1>ToDo List</h1>
-        <input type="text" placeholder="Add Task" class="task-block__input-value">
-        <button class="task-block__btn_add btn btn-primary">Add</button>
-        <ul class="task-list"></ul>
-        <button onclick="localStorage.clear(); location.reload();" class="task-block__btn_clear btn btn-primary">Clear</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-4">
+                    <div class="task-block">
+                            <h1>ToDo List</h1>
+                            <input type="text" placeholder="Add Task" class="task-block__input-value">
+                            <button class="task-block__btn_add btn btn-primary">Add</button>
+                            <ul class="task-list"></ul>
+                            <button onclick="localStorage.clear(); location.reload();" class="task-block__btn_clear btn btn-primary">Clear</button>
+                    </div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

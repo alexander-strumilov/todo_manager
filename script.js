@@ -17,17 +17,16 @@ const addTaskBtn = document.querySelector('.task-block__btn_add'),
             span.innerHTML = '&#10008;'
             li.classList.add(this.liClass);
             li.setAttribute(this.liAttr, i)
-            li.innerHTML = `Задача «${value}» создана.`,
+            li.innerHTML = `Задача <span>«${value}»</span> создана.`,
                 li.appendChild(span);
             taskList.appendChild(li);
         }
-}
+    }
 
 function init() {
     if (localStorage.getItem('tasks')) {
         const initData = JSON.parse(localStorage.getItem('tasks'));
         let i = 0;
-        let tasks = document.querySelectorAll('.taskList li');
         while (i < initData.length) {
             data.push(initData[i]);
             taskElement.create(initData[i].value, i)
@@ -37,19 +36,16 @@ function init() {
 }
 init();
 
-addTaskBtn.addEventListener('click', () => {
-    addTask(taskInput.value);
-});
-taskList.addEventListener('click', removeTask)
-
 function addTask(val) {
-    taskElement.create(val, data.length)
-    data.push({
-        'value': val,
-        'visible': true
-    });
-    taskInput.value = ''
-    updateStorage(data);
+    if (val !== "") {
+        taskElement.create(val, data.length)
+        data.push({
+            'value': val,
+            'visible': true
+        });
+        taskInput.value = ''
+        updateStorage(data);
+    }
 }
 
 function removeTask(e) {
@@ -75,3 +71,8 @@ function removeTask(e) {
 function updateStorage(arg) {
     localStorage.setItem('tasks', JSON.stringify(arg));
 }
+
+addTaskBtn.addEventListener('click', () => {
+    addTask(taskInput.value);
+});
+taskList.addEventListener('click', removeTask)
