@@ -10,7 +10,7 @@ const addTaskBtn = document.querySelector('.task-block__btn_add'),
 
 const uploadSavedData = () => {
     return new Promise((resolve,reject) => {
-        console.log('Loading data');
+        console.log('Loading data...');
         let savedData = JSON.parse(localStorage.getItem('tasks'));
         if (savedData !== null) {
             resolve(savedData);
@@ -21,14 +21,15 @@ const uploadSavedData = () => {
         Modal.closeModal();
         setTimeout(() => {
             load(savedData);
-            console.log(`Data has been loaded: ${savedData}`);
+            console.log(`Data has been loaded.`);
+            console.log(savedData);
         }, 2000);
         PreLoader.showLoader();
         setTimeout(() => {
             PreLoader.hideLoader();
         }, 2000);
     }).catch(savedData => {
-        console.error(`Error: Data has not been loaded. It is ${savedData}`);
+        console.error(`Error: Data has not been loaded. It is ${savedData}.`);
         Modal.modalWindow.innerHTML = '<h2>There is no data saved yet :(<br>Start from the beginning</h2>';
         setTimeout(() => {
             Modal.closeModal(); 
