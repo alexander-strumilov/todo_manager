@@ -1,6 +1,5 @@
 const preloader = document.querySelector('.transition-loader');
 
-console.log(preloader);
 function showLoader() {
     preloader.style.display = 'block';
 }
