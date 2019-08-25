@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -20,12 +17,33 @@
                             <input type="text" placeholder="Add Task" class="task-block__input-value">
                             <button class="task-block__btn_add btn btn-primary">ADD</button>
                             <ul class="task-list"></ul>
-                            <button onclick="localStorage.clear(); location.reload();" class="task-block__btn_clear btn btn-primary">Clear</button>
+                            <button class="task-block__btn_clear btn btn-primary">Clear</button>
                     </div>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <div class="modal-overlay"></div>
+    <div class="modal-wrapper">
+        <div class="modal-window">
+            <button class="modal-window__close">×</button>
+            <h2>Hi! Load saved list?</h2>
+            <div class="modal-window__btns">
+                <button class="modal-window__btn modal-window__btn_yes btn btn-success">Yes</button>
+                <button class="modal-window__btn modal-window__btn_no btn btn-danger">No</button>
+            </div>
+        </div>
+    </div>
+    <div class="transition-loader">
+        <div class="transition-loader-inner">
+          <label></label>
+          <label></label>
+          <label></label>
+          <label></label>
+          <label></label>
+          <label></label>
+        </div>
+      </div>
+    <script src="/dist/bundle.js"></script>
 </body>
 
 </html>

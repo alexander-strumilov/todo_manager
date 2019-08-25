@@ -1,0 +1,203 @@
+@import 'bootstrap/scss/bootstrap';
+@import './preloader';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: darkslateblue;
+    color: aliceblue;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+ul {
+    padding: 30px;
+}
+
+ul li {
+    position: relative;
+    list-style-type: none;
+}
+
+ul li .delete-task {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.task-block__input-value {
+    display: block;
+    margin: 10px 0;
+    width: 70%;
+    height: 50px;
+    border-radius: .25rem;
+    padding-left: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline;
+}
+
+.task-list__item-check {
+    position: absolute;
+    left: -20px;
+    top: 0;
+    height: 25px;
+    margin: 0;
+}
+
+span {
+    text-transform: uppercase;
+}
+
+.task-block__btn_add {
+    display: block;
+    height: 50px;
+    display: inline;
+    float: right;
+    margin: 10px 0;
+    width: 20%;
+}
+
+.task-block__btn_clear {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: red;
+}
+
+.task-block {
+    position: relative;
+    padding: 30px;
+}
+
+.task-list__item_done {
+    text-decoration: line-through;
+    color: red;
+}
+
+.task-list__item-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 18px;
+    color: red;
+    cursor: pointer;
+}
+
+/* Модальное окно */
+
+.modal-overlay {
+    background: rgba(33, 33, 61, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /* opacity: 0; */
+    /* visibility: hidden; */
+}
+
+.modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.modal-window {
+    background: #fff;
+    color: #666871;
+    text-align: center;
+    width: 400px;
+    max-width: 90%;
+    height: 250px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    margin: auto;
+    padding: 40px;
+    pointer-events: auto;
+    font-weight: bold;
+    /* visibility: hidden; */
+    animation: fade 1s;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 40em) {
+    .modal {
+        height: 350px;
+    }
+}
+
+.modal h2 {
+    font-size: 2.25em;
+    margin: 0.5em 0 0.25em;
+    color: #BDBFCA;
+}
+
+.open-modal {
+    text-align: center;
+    border: none;
+    margin: 10em 0 7em 0;
+    background: #27ae60;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 20px;
+    padding: 1em 2em;
+    font-weight: bold;
+    border-radius: 40px;
+    cursor: pointer;
+    -webkit-transition: background 0.3s;
+    transition: background 0.3s;
+}
+
+.open-modal:hover {
+    background: #2ecc71;
+}
+
+.modal-window__close {
+    color: #aaa;
+    background: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    width: 20px;
+    height: 20px;
+    line-height: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #666871;
+}
+.modal-window__btn {
+    width: 100px;
+    margin: 20px 10px;
+}
