@@ -1,4 +1,4 @@
-class Node {
+class Component {
     constructor(node, nodeClass,html) {
         this.node = node;
         this.nodeClass = nodeClass;
@@ -6,10 +6,10 @@ class Node {
     }
 
     createElement() {
-        let element = document.createElement(this.node);
-            element.classList.add(this.nodeClass);
-            element.innerHTML = `${this.html}`;
-            return element;
+        let $el = document.createElement(this.node);
+            $el.classList.add(this.nodeClass);
+            $el.innerHTML = `${this.html}`;
+            return $el;
     }
     get element() {
         return this.createElement();
@@ -17,5 +17,5 @@ class Node {
 }
 
 export {
-    Node
+    Component
 }

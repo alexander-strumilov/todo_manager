@@ -1,7 +1,8 @@
+import './sass/main.scss';
+
 import * as Modal from '../src/parts/modal.js';
 import * as ElementConstructor from '../src/parts/createnode.js';
 import * as PreLoader from '../src/parts/preloader.js';
-import './sass/main.scss';
 
 const addTaskBtn = document.querySelector('.task-block__btn_add'),
     taskInput = document.querySelector('.task-block__input-value'),
@@ -23,11 +24,11 @@ const uploadSavedData = () => {
             load(savedData);
             console.log(`Data has been loaded.`);
             console.log(savedData);
-        }, 2000);
+        }, 3000);
         PreLoader.showLoader();
         setTimeout(() => {
             PreLoader.hideLoader();
-        }, 2000);
+        }, 3000);
     }).catch(savedData => {
         console.error(`Error: Data has not been loaded. It is ${savedData}.`);
         Modal.modalWindow.innerHTML = '<h2>There is no data saved yet :(<br>Start from the beginning</h2>';
@@ -41,9 +42,9 @@ const uploadSavedData = () => {
 let data = [];
 
 function createNewTaskNode(value,index) {
-    let taskItem = new ElementConstructor.Node('li','task-list__item',value).element;
-    let closeBtn = new ElementConstructor.Node('span','task-list__item-close','&#10008;').element;
-    let checkTask = new ElementConstructor.Node('input','task-list__item-check','').element;
+    let taskItem = new ElementConstructor.Component('li','task-list__item',value).element;
+    let closeBtn = new ElementConstructor.Component('span','task-list__item-close','&#10008;').element;
+    let checkTask = new ElementConstructor.Component('input','task-list__item-check','').element;
     checkTask.type = "checkbox";
     taskItem.appendChild(closeBtn);
     taskItem.appendChild(checkTask);
